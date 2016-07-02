@@ -22,5 +22,7 @@ public interface DepartmentDao {
 
     public Department getDepartmentByName(String name);
 
-    public List<Employee> showEmployee(long id);
+    public List<Employee> getEmployeesBySelectedDepartment(long id);
+
+    public Long getAverageSalaryByDepartment(long dep_id);
 }

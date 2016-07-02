@@ -182,7 +182,7 @@ public class EmployeeServiceImplTest extends Assert {
     @Test(expected = IllegalArgumentException.class)
     public void testDeleteEmpoyeeWithWrongId() throws Exception{
         int sizeBefore = employeeService.getAllEmployees().size();
-        employeeService.deleteEmployee(-1);
+        employeeService.deleteEmployeeById(-1);
         int sizeAfter = employeeService.getAllEmployees().size();
         assertEquals(sizeBefore, sizeAfter);
     }
@@ -190,7 +190,7 @@ public class EmployeeServiceImplTest extends Assert {
     @Test
     public void testDeleteEmployee() throws Exception{
         int sizeBefore = employeeService.getAllEmployees().size();
-        employeeService.deleteEmployee(1);
+        employeeService.deleteEmployeeById(1);
         int sizeAfter = employeeService.getAllEmployees().size();
         assertEquals(sizeBefore, sizeAfter+1);
     }
@@ -234,20 +234,20 @@ public class EmployeeServiceImplTest extends Assert {
     @Test(expected = IllegalArgumentException.class)
     public void testGetEmployeeBetweenDatesWithNullTo() throws Exception {
         LocalDate date = new LocalDate("1985-02-01");
-        List<Employee> employees = employeeService.getEmployeeBetweenDatesOfBirthday(date, null);
+        List<Employee> employees = employeeService.getEmployeesBetweenDatesOfBirthday(date, null);
         assertNull(employees);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void testGetEmployeeBetweenDatesWithNullFrom() throws Exception {
         LocalDate date = new LocalDate("1985-02-01");
-        List<Employee> employees = employeeService.getEmployeeBetweenDatesOfBirthday(null, date);
+        List<Employee> employees = employeeService.getEmployeesBetweenDatesOfBirthday(null, date);
         assertNull(employees);
     }
 
     @Test(expected = IllegalArgumentException.class)
     public void testGetEmployeeBetweenNullDates() throws Exception {
-        List<Employee> employees = employeeService.getEmployeeBetweenDatesOfBirthday(null, null);
+        List<Employee> employees = employeeService.getEmployeesBetweenDatesOfBirthday(null, null);
         assertNull(employees);
     }
 
@@ -255,7 +255,7 @@ public class EmployeeServiceImplTest extends Assert {
     public void testGetEmployeeDatesBetweenToAndFrom() throws Exception {
         LocalDate from = new LocalDate("1985-02-01");
         LocalDate to = new LocalDate("1995-02-01");
-        List<Employee> employees = employeeService.getEmployeeBetweenDatesOfBirthday(to, from);
+        List<Employee> employees = employeeService.getEmployeesBetweenDatesOfBirthday(to, from);
         assertNull(employees);
     }
 
@@ -263,7 +263,7 @@ public class EmployeeServiceImplTest extends Assert {
     public void testGetEmployeeBetweenDates() throws Exception{
         LocalDate from = new LocalDate("1983-02-01");
         LocalDate to = new LocalDate("1995-07-07");
-        List<Employee> employees = employeeService.getEmployeeBetweenDatesOfBirthday(from, to);
+        List<Employee> employees = employeeService.getEmployeesBetweenDatesOfBirthday(from, to);
 
         assertNotNull(employees);
         for(Employee qwe:employees){

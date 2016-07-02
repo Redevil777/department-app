@@ -95,12 +95,12 @@ public class EmployeeDaoImplTest extends Assert {
     }
 
     @Test
-    public void testDeleteEmployee() throws Exception {
+    public void testDeleteEmployeeById() throws Exception {
         List<Employee> employees = employeeDao.getAllEmployees();
 
         int sizeBefore = employees.size();
 
-        employeeDao.deleteEmployee(1l);
+        employeeDao.deleteEmployeeById(1l);
 
         employees = employeeDao.getAllEmployees();
 
@@ -127,11 +127,11 @@ public class EmployeeDaoImplTest extends Assert {
     }
 
     @Test
-    public void testGetEmployeeBetweenDatesOfBirthday() throws Exception{
+    public void testGetEmployeesBetweenDatesOfBirthday() throws Exception{
         LocalDate from = new LocalDate("1987-12-18");
         LocalDate to = new LocalDate("1994-03-02");
 
-        List<Employee> employees = employeeDao.getEmployeeBetweenDatesOfBirthday(from, to);
+        List<Employee> employees = employeeDao.getEmployeesBetweenDatesOfBirthday(from, to);
 
         assertEquals(3, employees.size());
     }

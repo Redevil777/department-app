@@ -1,6 +1,7 @@
 package com.andrey.dao;
 
 import com.andrey.model.Department;
+import com.andrey.model.Employee;
 import org.junit.Assert;
 import org.junit.Test;
 import org.junit.runner.RunWith;
@@ -72,7 +73,7 @@ public class DepartmentDaoImplTest extends Assert {
     }
 
     @Test
-    public void testDeleteDepartment() throws Exception {
+    public void testDeleteDepartmentById() throws Exception {
         List<Department> departments = departmentDao.getAllDepartments();
         int sizeBefore = departments.size();
 
@@ -98,7 +99,14 @@ public class DepartmentDaoImplTest extends Assert {
     }
 
     @Test
-    public void testGetEmployeesByDepartment() throws Exception{
+    public void testGetEmployeesBySelectedDepartment() throws Exception {
+        List<Employee> employees = departmentDao.getEmployeesBySelectedDepartment(1);
+        assertEquals(3, employees.size());
+    }
 
+    @Test
+    public void getAverageSalaryByDepartment() throws Exception{
+        long salary = departmentDao.getAverageSalaryByDepartment(1);
+        assertEquals(290, salary);
     }
 }

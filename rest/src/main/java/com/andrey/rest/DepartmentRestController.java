@@ -104,8 +104,26 @@ public class DepartmentRestController {
     }
 
     @RequestMapping(value = "/employees/{dep_id}", method = RequestMethod.GET)
-    public ResponseEntity<List<Employee>> showEmployees(@PathVariable("dep_id") long dep_id){
-        List<Employee> employees = departmentService.showEmployee(dep_id);
-        return new ResponseEntity(employees, HttpStatus.OK);
+    public ResponseEntity<List<Employee>> getEmployeesBySelectedDepartment(@PathVariable("dep_id") long dep_id){
+        LOGGER.debug("get employees by selected department.");
+
+        try {
+            List<Employee> employees = departmentService.getEmployeesBySelectedDepartment(dep_id);
+            return new ResponseEntity(employees, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity(e.getMessage(), HttpStatus.NOT_FOUND);
+        }
+    }
+
+    @RequestMapping(value = "/avg_salary/{dep_id}", method = RequestMethod.GET)
+    public ResponseEntity getAverageSalaryBySelectedDepartment(@PathVariable("dep_id") long dep_id){
+        LOGGER.debug("get average salary by selected department.");
+
+        try {
+            long avgSalary = departmentService.getAverageSalaryByDepartment(dep_id);
+            return new ResponseEntity(avgSalary, HttpStatus.OK);
+        } catch (Exception e) {
+            return new ResponseEntity(e.getMessage(), HttpStatus.NOT_FOUND);
+        }
     }
 }

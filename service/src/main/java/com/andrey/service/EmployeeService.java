@@ -13,7 +13,7 @@ public interface EmployeeService {
 
     public long addEmployee(Employee employee);
 
-    public void deleteEmployee(long id);
+    public void deleteEmployeeById(long id);
 
     public void editEmployee(Employee employee);
 
@@ -21,5 +21,5 @@ public interface EmployeeService {
 
     public List<Employee> getEmployeeByDateOfBirthday(LocalDate date);
 
-    public List<Employee> getEmployeeBetweenDatesOfBirthday(LocalDate from, LocalDate to);
+    public List<Employee> getEmployeesBetweenDatesOfBirthday(LocalDate from, LocalDate to);
 }

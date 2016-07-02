@@ -50,7 +50,7 @@ public class DepartmentDaoImpl implements DepartmentDao {
             employee.setFname(resultSet.getString("fname"));
             employee.setLname(resultSet.getString("lname"));
             employee.setMname(resultSet.getString("mname"));
-            employee.setBirthday(new LocalDate(resultSet.getTimestamp("birthday")));//resultSet.getDate("birthday")
+            employee.setBirthday(new LocalDate(resultSet.getTimestamp("birthday")));
             employee.setSalary(resultSet.getLong("salary"));
             employee.setDep_id(resultSet.getLong("dep_id"));
             return employee;
@@ -120,11 +120,22 @@ public class DepartmentDaoImpl implements DepartmentDao {
     }
 
     @Override
-    public List<Employee> showEmployee(long id) {
-        LOGGER.debug("get employees by department");
-        Map<String, Object> map = new HashMap<>();
+    public List<Employee> getEmployeesBySelectedDepartment(long id) {
+        LOGGER.debug("get employees by selected department");
+        Map<String, Object> map = new HashMap<>(1);
         map.put("id", id);
         String sql = "select *from employee where dep_id = :id;";
         return namedParameterJdbcTemplate.query(sql, map, new EmployeeMapper());
+    }
+
+    @Override
+    public Long getAverageSalaryByDepartment(long dep_id) {
+        LOGGER.debug("get average salary by department");
+        Map<String, Object> map = new HashMap<>(1);
+        map.put("dep_id", dep_id);
+        String sql = "select avg(salary) from employee where dep_id = :dep_id;";
+        Long  avgSalary = namedParameterJdbcTemplate.queryForObject(sql, map, Long.class);
+
+        return avgSalary;
     }
 }

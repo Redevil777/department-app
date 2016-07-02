@@ -38,11 +38,14 @@ public class DepartmentServiceImpl implements DepartmentService {
         Assert.notNull(department, "Object department can't be null");
         Assert.isNull(department.getId());
         Assert.notNull(department.getDep_name(), "Department name can't be empty");
+
         Department department1 = getDepartmentByName(department.getDep_name());
         if (department1 != null){
             throw new IllegalArgumentException("Department with this name already exist");
         }
-        return departmentDao.addDepartment(department);
+
+        Long id = departmentDao.addDepartment(department);
+        return id;
     }
 
     @Override
@@ -106,10 +109,28 @@ public class DepartmentServiceImpl implements DepartmentService {
     }
 
     @Override
-    public List<Employee> showEmployee(long id) {
-        LOGGER.debug("show employees by department");
+    public List<Employee> getEmployeesBySelectedDepartment(long id) {
+        LOGGER.debug("Get employees by selected department.");
 
-        List<Employee> employees = departmentDao.showEmployee(id);
-        return employees;
+        List<Employee> employees = null;
+        try {
+            employees= departmentDao.getEmployeesBySelectedDepartment(id);
+            Assert.notEmpty(employees);
+            return employees;
+        } catch (Exception e) {
+            throw new IllegalArgumentException("Not found employee in selected department.");
+        }
+    }
+
+    @Override
+    public Long getAverageSalaryByDepartment(long dep_id) {
+        LOGGER.debug("Get average salary by selected department.");
+        try {
+            long salary = departmentDao.getAverageSalaryByDepartment(dep_id);
+            Assert.notNull(salary);
+            return salary;
+        }catch (Exception e) {
+            throw new IllegalArgumentException("Not found employee in selected department.");
+        }
     }
 }

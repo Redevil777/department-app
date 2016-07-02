@@ -53,7 +53,7 @@ public class EmployeeRestController {
         LOGGER.debug("delete employee with id = " + id);
 
         try {
-            employeeService.deleteEmployee(id);
+            employeeService.deleteEmployeeById(id);
             return new ResponseEntity("Deleted", HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity(e.getMessage(), HttpStatus.NOT_FOUND);
@@ -125,7 +125,7 @@ public class EmployeeRestController {
         List<Employee> employees = null;
 
         try {
-            employees = employeeService.getEmployeeBetweenDatesOfBirthday(from, to);
+            employees = employeeService.getEmployeesBetweenDatesOfBirthday(from, to);
             return new ResponseEntity(employees, HttpStatus.OK);
         } catch (Exception e) {
             return new ResponseEntity(e.getMessage(), HttpStatus.BAD_REQUEST);

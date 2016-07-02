@@ -46,8 +46,8 @@ public class DepartmentWebController {
     }
 
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
-    public ModelAndView deleteDepartment(RedirectAttributes redirectAttributes,
-                                         @PathVariable long id) {
+    public ModelAndView deleteDepartmentById(RedirectAttributes redirectAttributes,
+                                             @PathVariable long id) {
         LOGGER.debug("delete department with id = " + id);
 
         ModelAndView view = new ModelAndView("redirect:/department/all");
@@ -140,7 +140,7 @@ public class DepartmentWebController {
     }
 
     @RequestMapping(value = "/employees/{id}", method = RequestMethod.GET)
-    public ModelAndView showEmployees(@PathVariable long id){
+    public ModelAndView getEmployeesBySelectedDepartment(@PathVariable long id){
         LOGGER.debug("show employees");
 
         ModelAndView view = new ModelAndView("departmentemployee");
@@ -159,7 +159,7 @@ public class DepartmentWebController {
     }
 
     @RequestMapping(value = "/salary/{id}", method = RequestMethod.GET)
-    public ModelAndView avgSalary(@PathVariable long id) {
+    public ModelAndView getAverageSalaryBySelectedDepartment(@PathVariable long id) {
         LOGGER.debug("show average salary in select department.");
 
         ModelAndView view = new ModelAndView("avgsalary");
@@ -167,14 +167,7 @@ public class DepartmentWebController {
         RestTemplate restTemplate = new RestTemplate();
 
         try {
-            Employee[] employees = restTemplate.getForObject(DEPARTMENT_REST + "/employees/" + id, Employee[].class);
-
-            int salary = 0;
-
-            for(Employee emp:employees) {
-                salary += emp.getSalary();
-            }
-            salary = salary/employees.length;
+            long salary = restTemplate.getForObject(DEPARTMENT_REST + "/avg_salary/" + id, Long.class);
 
             view.addObject("avg", salary);
         } catch (Exception e) {

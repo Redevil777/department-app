@@ -102,8 +102,8 @@ public class EmployeeWebController {
     }
 
     @RequestMapping(value = "/delete/{id}", method = RequestMethod.GET)
-    public ModelAndView deleteEmployee(RedirectAttributes redirectAttributes,
-                                       @PathVariable long id){
+    public ModelAndView deleteEmployeeById(RedirectAttributes redirectAttributes,
+                                           @PathVariable long id){
         LOGGER.debug("delete employee with id = " + id);
 
         ModelAndView view = new ModelAndView("redirect:/employee/all");

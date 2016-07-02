@@ -49,7 +49,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public void deleteEmployee(long id) {
+    public void deleteEmployeeById(long id) {
         LOGGER.debug("delete employee by id = " + id);
         Assert.notNull(id, "Employee id can't be null");
         Employee employee = null;
@@ -59,7 +59,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         } catch (EmptyResultDataAccessException e){
             throw new IllegalArgumentException("Employee with this ID doesn't exist");
         }
-        employeeDao.deleteEmployee(id);
+        employeeDao.deleteEmployeeById(id);
     }
 
     @Override
@@ -118,7 +118,7 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
-    public List<Employee> getEmployeeBetweenDatesOfBirthday(LocalDate from, LocalDate to) {
+    public List<Employee> getEmployeesBetweenDatesOfBirthday(LocalDate from, LocalDate to) {
         LOGGER.debug("get employee between date from " + from + " to " + to);
         Assert.notNull(from, "Date from can't be null");
         Assert.notNull(to, "Date to can't be null");
@@ -127,7 +127,7 @@ public class EmployeeServiceImpl implements EmployeeService {
         List<Employee> employees = null;
 
         try {
-            employees = employeeDao.getEmployeeBetweenDatesOfBirthday(from, to);
+            employees = employeeDao.getEmployeesBetweenDatesOfBirthday(from, to);
             Assert.notNull(employees, "Employee can't be null");
             Assert.notEmpty(employees, "Employee can't be empty");
         } catch (EmptyResultDataAccessException ex) {

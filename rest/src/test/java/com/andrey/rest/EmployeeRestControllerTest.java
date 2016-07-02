@@ -44,6 +44,8 @@ import static org.springframework.test.web.servlet.setup.MockMvcBuilders.standal
 @ContextConfiguration(locations = {"classpath*:/spring-rest-mock-test.xml"})
 @TransactionConfiguration(transactionManager="transactionManager", defaultRollback=true)
 public class EmployeeRestControllerTest {
+
+
     private MockMvc mockMvc;
 
     @Resource
@@ -195,7 +197,7 @@ public class EmployeeRestControllerTest {
 
     @Test
     public void testDeleteEmployee() throws Exception{
-        employeeService.deleteEmployee(6);
+        employeeService.deleteEmployeeById(6);
         expectLastCall();
         replay(employeeService);
 
@@ -296,7 +298,7 @@ public class EmployeeRestControllerTest {
         Employee employee =  new Employee(1L, "Cristiano", "Ronaldo", "Aviero", new LocalDate("1985-02-05"), 322, 1);
         ObjectMapper mapper = createObjectMapperWithJacksonConverter();
 
-        employeeService.getEmployeeBetweenDatesOfBirthday(new LocalDate("1985-02-04"), new LocalDate("1985-02-06"));
+        employeeService.getEmployeesBetweenDatesOfBirthday(new LocalDate("1985-02-04"), new LocalDate("1985-02-06"));
 
         List<Employee> employees = new ArrayList<>();
         employees.add(employee);

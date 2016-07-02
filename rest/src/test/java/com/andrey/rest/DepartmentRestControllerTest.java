@@ -1,11 +1,13 @@
 package com.andrey.rest;
 
 import com.andrey.model.Department;
+import com.andrey.model.Employee;
 import com.andrey.service.DepartmentService;
 import com.fasterxml.jackson.core.Version;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.fasterxml.jackson.databind.module.SimpleModule;
 import com.fasterxml.jackson.databind.ser.std.SqlDateSerializer;
+import org.joda.time.LocalDate;
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
@@ -21,6 +23,9 @@ import org.springframework.test.web.servlet.MockMvc;
 
 import javax.annotation.Resource;
 import java.sql.Date;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.List;
 
 import static org.easymock.EasyMock.*;
 import static org.easymock.EasyMock.replay;
@@ -70,7 +75,7 @@ public class DepartmentRestControllerTest {
         return messageConverter;
     }
 
-    public static Department createDepartment()  {
+    private static Department createDepartment()  {
         Department department = new Department(1l, "java developer");
 
         return department;
@@ -84,6 +89,46 @@ public class DepartmentRestControllerTest {
         simpleModule.addSerializer(Date.class, new SqlDateSerializer());
         mapper.registerModule(simpleModule);
         return mapper;
+    }
+
+    private List<Employee> createEmployees() {
+        return new ArrayList<Employee>(
+                Arrays.asList(
+                        new Employee(1l, "Cristiano", "Ronaldo", "Aviero", new LocalDate("1985-02-05"), 322, 1),
+                        new Employee(2l, "Wayne", "Rooney", "Mark", new LocalDate("1985-10-24"), 300, 1),
+                        new Employee(3l, "Carlos", "Tevez", "Alberto", new LocalDate("1984-02-05"), 250, 1)
+                )
+        );
+    }
+
+    private List<Department> createDepartments() {
+        return new ArrayList<Department>(
+                Arrays.asList(
+                        new Department(1l, "java developer"),
+                        new Department(2l, "c++ developer"),
+                        new Department(3l, "change"),
+                        new Department(4l, "objective-c developer")
+                )
+        );
+    }
+
+    @Test
+    public void testGetAllDepartments() throws Exception {
+        departmentService.getAllDepartments();
+        expectLastCall().andReturn(createDepartments());
+        replay(departmentService);
+
+        List<Department> departments = createDepartments();
+
+        ObjectMapper mapper = createObjectMapperWithJacksonConverter();
+
+        this.mockMvc.perform(
+                get("/department/all")
+                        .accept(MediaType.APPLICATION_JSON)
+        )
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(content().string(mapper.writeValueAsString(departments)));
     }
 
     @Test
@@ -249,6 +294,25 @@ public class DepartmentRestControllerTest {
         )
                 .andDo(print())
                 .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    public void testGetEmployeesBySelectedDepartment() throws Exception {
+        departmentService.getEmployeesBySelectedDepartment(1);
+        expectLastCall().andReturn(createEmployees());
+        replay(departmentService);
+
+        List<Employee> employees = createEmployees();
+
+        ObjectMapper mapper = createObjectMapperWithJacksonConverter();
+
+        this.mockMvc.perform(
+                get("/department/employees/" + 1)
+                        .accept(MediaType.APPLICATION_JSON)
+        )
+                .andDo(print())
+                .andExpect(status().isOk())
+                .andExpect(content().string(mapper.writeValueAsString(employees)));
     }
 
 }

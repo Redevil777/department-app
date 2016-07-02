@@ -75,7 +75,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
     }
 
     @Override
-    public void deleteEmployee(long id) {
+    public void deleteEmployeeById(long id) {
         LOGGER.debug("delete employee with id = " + id);
 
         Map<String, Object> map = new HashMap<>(1);
@@ -125,7 +125,7 @@ public class EmployeeDaoImpl implements EmployeeDao {
     }
 
     @Override
-    public List<Employee> getEmployeeBetweenDatesOfBirthday(LocalDate from, LocalDate to) {
+    public List<Employee> getEmployeesBetweenDatesOfBirthday(LocalDate from, LocalDate to) {
         LOGGER.debug("get employee between " + from + " to " + to);
 
         Map<String, Object> map = new HashMap<>(2);

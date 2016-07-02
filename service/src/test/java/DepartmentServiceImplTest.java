@@ -1,4 +1,5 @@
 import com.andrey.model.Department;
+import com.andrey.model.Employee;
 import com.andrey.service.DepartmentService;
 import org.junit.Assert;
 import org.junit.Test;
@@ -87,7 +88,7 @@ public class DepartmentServiceImplTest extends Assert {
     }
 
     @Test
-    public void testDeleteDepartment() throws Exception{
+    public void testDeleteDepartmentById() throws Exception{
         int sizeBefore = departmentService.getAllDepartments().size();
 
         departmentService.deleteDepartmentById(4);
@@ -148,4 +149,29 @@ public class DepartmentServiceImplTest extends Assert {
         assertNull(department);
     }
 
+    @Test
+    public void testGetEmployeesBySelectedDepartment() throws Exception {
+        List<Employee> employees = departmentService.getEmployeesBySelectedDepartment(1);
+        assertNotNull(employees);
+        assertEquals(3, employees.size());
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testGetEmployeeBySelectedDepartmentWithWrongId() throws Exception{
+        List<Employee> employees = departmentService.getEmployeesBySelectedDepartment(5);
+        assertNull(employees);
+    }
+
+    @Test
+    public void testGetAverageSalaryBySelectedDepartment() throws Exception {
+        long avgSalary = departmentService.getAverageSalaryByDepartment(1);
+        assertNotNull(avgSalary);
+        assertEquals(290, avgSalary);
+    }
+
+    @Test(expected = IllegalArgumentException.class)
+    public void testGetAverageSalaryBySelectedDepartmentWithWrongId() throws Exception {
+        long avgSalary = departmentService.getAverageSalaryByDepartment(8);
+        assertNull(avgSalary);
+    }
 }
