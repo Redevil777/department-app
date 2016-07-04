@@ -9,12 +9,21 @@ public class Department {
 
     private String dep_name;
 
+    private long avgSalary;
+
     public Department(){
     }
 
     public Department(Long id, String dep_name) {
         this.id = id;
         this.dep_name = dep_name;
+    }
+
+
+    public Department(Long id, String dep_name, long avgSalary) {
+        this.id = id;
+        this.dep_name = dep_name;
+        this.avgSalary = avgSalary;
     }
 
     public Long getId() {
@@ -33,6 +42,14 @@ public class Department {
         this.dep_name = dep_name;
     }
 
+    public long getAvgSalary() {
+        return avgSalary;
+    }
+
+    public void setAvgSalary(long avgSalary) {
+        this.avgSalary = avgSalary;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -40,6 +57,7 @@ public class Department {
 
         Department that = (Department) o;
 
+        if (avgSalary != that.avgSalary) return false;
         if (id != null ? !id.equals(that.id) : that.id != null) return false;
         return dep_name != null ? dep_name.equals(that.dep_name) : that.dep_name == null;
 
@@ -49,7 +67,7 @@ public class Department {
     public int hashCode() {
         int result = id != null ? id.hashCode() : 0;
         result = 31 * result + (dep_name != null ? dep_name.hashCode() : 0);
+        result = 31 * result + (int) (avgSalary ^ (avgSalary >>> 32));
         return result;
     }
-
 }

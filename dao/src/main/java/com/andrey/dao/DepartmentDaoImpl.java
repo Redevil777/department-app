@@ -33,6 +33,16 @@ public class DepartmentDaoImpl implements DepartmentDao {
 
     private static final Logger LOGGER = LogManager.getLogger(DepartmentDaoImpl.class);
 
+    public class DepartmentMapperWithSalary implements RowMapper<Department> {
+        public Department mapRow(ResultSet resultSet, int i) throws SQLException {
+            Department department = new Department();
+            department.setId(resultSet.getLong("id"));
+            department.setDep_name(resultSet.getString("dep_name"));
+            department.setAvgSalary(resultSet.getLong("salary"));
+            return department;
+        }
+    }
+
     public class DepartmentMapper implements RowMapper<Department> {
         public Department mapRow(ResultSet resultSet, int i) throws SQLException {
             Department department = new Department();
@@ -60,8 +70,8 @@ public class DepartmentDaoImpl implements DepartmentDao {
     @Override
     public List<Department> getAllDepartments() {
         LOGGER.debug("get Departments");
-        String sql = "select *from department;";
-        return namedParameterJdbcTemplate.query(sql, new DepartmentMapper());
+        String sql = "select d.id, d.dep_name, avg(e.salary) as salary from department d left join employee e on d.id = e.dep_id group by d.id;";
+        return namedParameterJdbcTemplate.query(sql, new DepartmentMapperWithSalary());
     }
 
     @Override
@@ -126,16 +136,5 @@ public class DepartmentDaoImpl implements DepartmentDao {
         map.put("id", id);
         String sql = "select *from employee where dep_id = :id;";
         return namedParameterJdbcTemplate.query(sql, map, new EmployeeMapper());
-    }
-
-    @Override
-    public Long getAverageSalaryByDepartment(long dep_id) {
-        LOGGER.debug("get average salary by department");
-        Map<String, Object> map = new HashMap<>(1);
-        map.put("dep_id", dep_id);
-        String sql = "select avg(salary) from employee where dep_id = :dep_id;";
-        Long  avgSalary = namedParameterJdbcTemplate.queryForObject(sql, map, Long.class);
-
-        return avgSalary;
     }
 }

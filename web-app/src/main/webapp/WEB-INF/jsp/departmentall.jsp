@@ -40,19 +40,19 @@
             <tr>
                 <td>№</td>
                 <td>Name</td>
+                <td>Average salary</td>
             </tr>
             <c:forEach items="${departments}" var="department">
 
                 <c:url var="deleteUrl" value="/department/delete/${department.id}" />
                 <c:url var="editUrl" value="/department/edit/${department.id}" />
-                <c:url var="averageSalary" value="/department/salary/${department.id}" />
                 <c:url var="empDep" value="/department/employees/${department.id}"/>
                 <tr>
                     <td><c:out value="${department.id}" /></td>
                     <td><c:out value="${department.dep_name}" /></td>
+                    <td><c:out value="${department.avgSalary}" /></td>
                     <td><a href="${editUrl}">Edit</a> </td>
                     <td><a href="${deleteUrl}">Delete</a></td>
-                    <td><a href="${averageSalary}">Average salary</a> </td>
                     <td><a href="${empDep}">Show employees</a> </td>
                 </tr>
             </c:forEach>

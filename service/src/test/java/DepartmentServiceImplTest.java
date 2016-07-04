@@ -161,17 +161,4 @@ public class DepartmentServiceImplTest extends Assert {
         List<Employee> employees = departmentService.getEmployeesBySelectedDepartment(5);
         assertNull(employees);
     }
-
-    @Test
-    public void testGetAverageSalaryBySelectedDepartment() throws Exception {
-        long avgSalary = departmentService.getAverageSalaryByDepartment(1);
-        assertNotNull(avgSalary);
-        assertEquals(290, avgSalary);
-    }
-
-    @Test(expected = IllegalArgumentException.class)
-    public void testGetAverageSalaryBySelectedDepartmentWithWrongId() throws Exception {
-        long avgSalary = departmentService.getAverageSalaryByDepartment(8);
-        assertNull(avgSalary);
-    }
 }

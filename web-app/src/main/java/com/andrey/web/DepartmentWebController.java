@@ -157,23 +157,4 @@ public class DepartmentWebController {
 
         return view;
     }
-
-    @RequestMapping(value = "/salary/{id}", method = RequestMethod.GET)
-    public ModelAndView getAverageSalaryBySelectedDepartment(@PathVariable long id) {
-        LOGGER.debug("show average salary in select department.");
-
-        ModelAndView view = new ModelAndView("avgsalary");
-
-        RestTemplate restTemplate = new RestTemplate();
-
-        try {
-            long salary = restTemplate.getForObject(DEPARTMENT_REST + "/avg_salary/" + id, Long.class);
-
-            view.addObject("avg", salary);
-        } catch (Exception e) {
-            view.addObject("error", "Not found any employees.");
-        }
-
-        return view;
-    }
 }

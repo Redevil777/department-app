@@ -103,10 +103,4 @@ public class DepartmentDaoImplTest extends Assert {
         List<Employee> employees = departmentDao.getEmployeesBySelectedDepartment(1);
         assertEquals(3, employees.size());
     }
-
-    @Test
-    public void getAverageSalaryByDepartment() throws Exception{
-        long salary = departmentDao.getAverageSalaryByDepartment(1);
-        assertEquals(290, salary);
-    }
 }

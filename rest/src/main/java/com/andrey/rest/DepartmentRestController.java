@@ -114,16 +114,4 @@ public class DepartmentRestController {
             return new ResponseEntity(e.getMessage(), HttpStatus.NOT_FOUND);
         }
     }
-
-    @RequestMapping(value = "/avg_salary/{dep_id}", method = RequestMethod.GET)
-    public ResponseEntity getAverageSalaryBySelectedDepartment(@PathVariable("dep_id") long dep_id){
-        LOGGER.debug("get average salary by selected department.");
-
-        try {
-            long avgSalary = departmentService.getAverageSalaryByDepartment(dep_id);
-            return new ResponseEntity(avgSalary, HttpStatus.OK);
-        } catch (Exception e) {
-            return new ResponseEntity(e.getMessage(), HttpStatus.NOT_FOUND);
-        }
-    }
 }

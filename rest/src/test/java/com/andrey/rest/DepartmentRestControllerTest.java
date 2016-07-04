@@ -104,10 +104,10 @@ public class DepartmentRestControllerTest {
     private List<Department> createDepartments() {
         return new ArrayList<Department>(
                 Arrays.asList(
-                        new Department(1l, "java developer"),
-                        new Department(2l, "c++ developer"),
-                        new Department(3l, "change"),
-                        new Department(4l, "objective-c developer")
+                        new Department(1l, "java developer", 290),
+                        new Department(2l, "c++ developer", 200),
+                        new Department(3l, "change", 250),
+                        new Department(4l, "objective-c developer", 190)
                 )
         );
     }

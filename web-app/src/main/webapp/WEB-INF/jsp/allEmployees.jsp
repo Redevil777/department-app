@@ -84,8 +84,8 @@
         <h4>Search employees between date of birthday</h4>
         <c:url var="search" value="/employee/between" />
         <form:form method="get" action="${search}">
-            From <input type="date" name="from">
-            To <input type="date" name="to">
+            From <input type="date" name="from" required>
+            To <input type="date" name="to" required>
             <input type="submit" value="search">
         </form:form> <br>
 
@@ -93,7 +93,7 @@
         <h4>Search employees by date of birthday</h4>
         <c:url var="search2" value="/employee/date" />
         <form:form method="get" action="${search2}">
-            Date <input type="date" name="date">
+            Date <input type="date" name="date" required>
             <input type="submit" value="search">
         </form:form> <br>
     </c:otherwise>

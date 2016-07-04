@@ -121,16 +121,4 @@ public class DepartmentServiceImpl implements DepartmentService {
             throw new IllegalArgumentException("Not found employee in selected department.");
         }
     }
-
-    @Override
-    public Long getAverageSalaryByDepartment(long dep_id) {
-        LOGGER.debug("Get average salary by selected department.");
-        try {
-            long salary = departmentDao.getAverageSalaryByDepartment(dep_id);
-            Assert.notNull(salary);
-            return salary;
-        }catch (Exception e) {
-            throw new IllegalArgumentException("Not found employee in selected department.");
-        }
-    }
 }
